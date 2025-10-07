@@ -57,10 +57,9 @@ export class CreateBookDto {
   @IsEnum(ReadingStatus)
   status?: ReadingStatus;
 
-  // --- Relacionamentos ---
-
+  // Relacionamento com gêneros (IDs)
+  @IsOptional()
   @IsArray()
   @IsInt({ each: true })
-  @IsOptional() // Gêneros podem ser adicionados depois
   genreIds?: number[];
 }

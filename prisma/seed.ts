@@ -19,9 +19,12 @@ async function main() {
 
   for (const book of oldBooks) {
     console.log(`Processando o livro: ${book.title}`);
+
+    // Garantir que seja array de gêneros
+    const genresArray = Array.isArray(book.genres) ? book.genres : [book.genre];
+
     await prisma.book.create({
       data: {
-        id: book.id,
         title: book.title,
         author: book.author,
         year: book.year,
@@ -32,16 +35,15 @@ async function main() {
         currentPage: 0,
         status: 'QUERO_LER',
         genres: {
-          connectOrCreate: [
-            {
-              where: { name: book.genre },
-              create: { name: book.genre },
-            },
-          ],
+          connectOrCreate: genresArray.map((g: string) => ({
+            where: { name: g },
+            create: { name: g },
+          })),
         },
       },
     });
   }
+
   console.log('✅ Seeding finalizado com sucesso!');
 }
 
