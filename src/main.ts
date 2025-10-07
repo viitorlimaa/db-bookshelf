@@ -18,13 +18,14 @@ async function bootstrap() {
   );
 
   // ✅ Libera CORS para o frontend (localhost e produção)
-  app.enableCors({
+ app.enableCors({
   origin: [
-    'http://localhost:3000',
-    'https://bookshelf-mobr.vercel.app',
+    "http://localhost:3000",            // local
+    "https://bookshelf-mobr.vercel.app" // front deployado
   ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  allowedHeaders: ["Content-Type", "Authorization"], // adicione se necessário
+  credentials: true, // se usar cookies/autenticação
 });
 
 
