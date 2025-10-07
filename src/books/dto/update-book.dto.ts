@@ -7,4 +7,6 @@ import { CreateBookDto } from './create-book.dto';
  * * Isso garante que não precisamos reescrever todas as regras de validação
  * e que o DTO funcione perfeitamente para operações de PATCH.
  */
+// src/books/dto/update-book.dto.ts
 export class UpdateBookDto extends PartialType(CreateBookDto) {}
+

@@ -1,3 +1,4 @@
+// src/books/dto/create-book.dto.ts
 import { ReadingStatus } from '@prisma/client';
 import {
   IsArray,
@@ -10,7 +11,6 @@ import {
   IsUrl,
   Max,
   Min,
-  ValidateIf,
 } from 'class-validator';
 
 export class CreateBookDto {
@@ -29,7 +29,7 @@ export class CreateBookDto {
   @Min(1)
   pages: number;
 
-  @IsNumber({ allowNaN: false })
+  @IsNumber()
   @Min(0)
   @Max(5)
   rating: number;
@@ -38,31 +38,28 @@ export class CreateBookDto {
   @IsNotEmpty()
   synopsis: string;
 
-  // ✅ Agora opcional para PATCH e testes sem URL
-  @IsOptional()
   @IsUrl()
-  cover?: string;
+  cover: string;
 
   @IsInt()
   @Min(0)
   currentPage: number;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   isbn?: string;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   notes?: string;
 
   @IsOptional()
   @IsEnum(ReadingStatus)
   status?: ReadingStatus;
 
-  // ✅ Proteção adicional: só valida array se for fornecido
+  // Relacionamento com gêneros via IDs
   @IsOptional()
   @IsArray()
-  @ValidateIf((o) => o.genreIds !== undefined)
   @IsInt({ each: true })
   genreIds?: number[];
 }

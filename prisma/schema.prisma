@@ -4,37 +4,45 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
-// Enum de status de leitura
+// 1.6: Status de Leitura como Enum
 enum ReadingStatus {
   QUERO_LER
   LENDO
   LIDO
+  PAUSADO
+  ABANDONADO
 }
 
-// Tabela de gêneros
-model Genre {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  books Book[] @relation("BookGenres")
-}
-
-// Tabela de livros
+// 1.4: Modelo de Livro Expandido
 model Book {
-  id          Int           @id @default(autoincrement())
-  title       String
-  author      String
-  year        Int           @default(0)
-  pages       Int           @default(0)
-  currentPage Int           @default(0)
-  status      ReadingStatus @default(QUERO_LER)
-  isbn        String?       
-  cover       String?       
-  rating      Float?        
-  synopsis    String?       
-  notes       String?       
+  id       Int    @id @default(autoincrement())
+  title    String // Obrigatório
+  author   String // Obrigatório
+  year     Int // Obrigatório
+  pages    Int // Obrigatório
+  rating   Float // Obrigatório
+  synopsis String // Obrigatório
+  cover    String // Obrigatório
 
-  genres Genre[] @relation("BookGenres")
+  status      ReadingStatus @default(QUERO_LER) // Não obrigatório na criação (tem padrão)
+  currentPage Int // Obrigatório
+  createdAt   DateTime      @default(now()) // Não obrigatório na criação (tem padrão)
+  updatedAt   DateTime      @updatedAt // Não obrigatório na criação (gerado auto)
+
+  isbn  String? // Opcional
+  notes String? // Opcional
+
+  genres Genre[] // Relacionamento
+}
+
+// 1.5: Modelo de Gêneros
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // Relacionamento com Livros
+  books Book[]
 }
