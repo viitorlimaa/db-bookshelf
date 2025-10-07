@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "A Sombra do Vento",
+    "author": "Carlos Ruiz Zafón",
+    "genre": "Mistério",
+    "year": 2001,
+    "pages": 487,
+    "rating": 4.8,
+    "synopsis": "Em uma Barcelona sombria, um jovem encontra consolo em um livro amaldiçoado que o leva a uma jornada pelos segredos mais obscuros da cidade.",
+    "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1634215252l/192880.jpg"
+  },
+  {
+    "id": 2,
+    "title": "O Guia do Mochileiro das Galáxias",
+    "author": "Douglas Adams",
+    "genre": "Ficção Científica",
+    "year": 1979,
+    "pages": 208,
+    "rating": 4.5,
+    "synopsis": "Segundos antes da Terra ser demolida, Arthur Dent é salvo por seu amigo Ford Prefect, um pesquisador para o novo Guia do Mochileiro das Galáxias.",
+    "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1531899175l/386162.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Cem Anos de Solidão",
+    "author": "Gabriel García Márquez",
+    "genre": "Realismo Mágico",
+    "year": 1967,
+    "pages": 417,
+    "rating": 4.6,
+    "synopsis": "A história multi-geracional da família Buendía, cujo patriarca, José Arcadio Buendía, funda a cidade fictícia de Macondo.",
+    "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327881361l/320.jpg"
+  }
+]
