@@ -1,42 +1,40 @@
-// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
 
-// 🔹 Configuração do banco
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
 
-// 🔹 Prisma Client
-generator client {
-  provider = "prisma-client-js"
+// Enum de status de leitura
+enum ReadingStatus {
+  QUERO_LER
+  LENDO
+  LIDO
 }
 
-// 🔹 Model de Livro
+// Tabela de gêneros
+model Genre {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  books Book[]  @relation("BookGenres")
+}
+
+// Tabela de livros
 model Book {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   title       String
   author      String
   year        Int
   pages       Int
   currentPage Int
-  status      String
-  isbn        String?
-  cover       String
-  rating      Float
-  synopsis    String
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      ReadingStatus
+  isbn        String?       
+  cover       String?       
+  rating      Float?        
+  synopsis    String?       
+  notes       String?       
 
-  // Relacionamento Many-to-Many com Genre
-  genres      Genre[]
-}
-
-// 🔹 Model de Gênero
-model Genre {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-
-  // Relacionamento Many-to-Many com Book
-  books Book[]
+  genres Genre[] @relation("BookGenres")
 }
