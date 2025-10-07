@@ -58,9 +58,11 @@ export class BooksService {
     });
   }
 
-  deleteBook(id: number) {
-    return this.prisma.book.delete({
-      where: { id },
-    });
-  }
+ async deleteBook(id: number) {
+  await this.prisma.book.delete({
+    where: { id },
+  });
+  // não retorna nada -> força o Nest a respeitar o 204 do controller
+  return;
+}
 }
