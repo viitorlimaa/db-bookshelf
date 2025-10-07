@@ -22,40 +22,23 @@ export class BooksService {
     return this.prisma.book.create({ data });
   }
 
- async update(id: number, data: any) {
-  const {
-    title,
-    author,
-    year,
-    pages,
-    rating,
-    synopsis,
-    cover,
-    currentPage,
-    status,
-    genreIds,
-  } = data;
+async update(id: number, data: UpdateBookDto) {
+  const { genreIds, ...rest } = data;
 
   return this.prisma.book.update({
-    where: { id: Number(id) },
+    where: { id },
     data: {
-      title,
-      author,
-      year,
-      pages,
-      rating,
-      synopsis,
-      cover,
-      currentPage,
-      status,
-      // 🔹 Atualiza relação de gêneros corretamente
-      genres: {
-        set: genreIds?.map((genreId: number) => ({ id: genreId })) || [],
-      },
+      ...rest,
+      ...(genreIds && {
+        genres: {
+          set: genreIds.map((id: number) => ({ id })),
+        },
+      }),
     },
     include: { genres: true },
   });
 }
+
 
 
   deleteBook(id: number) {

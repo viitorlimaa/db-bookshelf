@@ -6,14 +6,21 @@ import { PrismaService } from './prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // ✅ Habilita validação global
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // ignora campos que não estão no DTO
+      forbidNonWhitelisted: false, // não lança erro por campos extras
+      transform: true, // converte tipos automaticamente (string → number, etc)
+      transformOptions: {
+        enableImplicitConversion: true, // aceita número como string, boolean etc.
+      },
+    }),
+  );
 
   // ✅ Libera CORS para o frontend (localhost e produção)
   app.enableCors({
     origin: [
-      'http://localhost:3000',            // desenvolvimento local (Next.js)
+      'http://localhost:3000', // desenvolvimento local (Next.js)
       'https://bookshelf-app.vercel.app', // produção (se publicar o front depois)
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -27,7 +34,9 @@ async function bootstrap() {
   // ✅ Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('Bookshelf API')
-    .setDescription('API para gerenciamento de uma biblioteca pessoal de livros.')
+    .setDescription(
+      'API para gerenciamento de uma biblioteca pessoal de livros.',
+    )
     .setVersion('1.0')
     .addTag('books', 'Operações relacionadas a livros')
     .addTag('genres', 'Operações relacionadas a gêneros')

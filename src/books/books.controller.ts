@@ -100,7 +100,7 @@ export class BooksController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBookDto: UpdateBookDto,
   ) {
-    return this.booksService.updateBook(id, updateBookDto);
+    return this.booksService.update(id, updateBookDto);
   }
 
   @Delete(':id')
