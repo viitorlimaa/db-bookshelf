@@ -7,13 +7,20 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Iniciando o processo de seeding...');
 
+  // Limpar tabelas
   await prisma.book.deleteMany({});
   await prisma.genre.deleteMany({});
   console.log('Tabelas limpas com sucesso.');
 
+  // Carregar dados antigos
   const filePath = path.join(process.cwd(), 'prisma', 'books-DEPRECATED.json');
-  const oldBooksData = fs.readFileSync(filePath);
-  const oldBooks = JSON.parse(oldBooksData.toString());
+  if (!fs.existsSync(filePath)) {
+    console.warn(`Arquivo não encontrado: ${filePath}`);
+    return;
+  }
+
+  const oldBooksData = fs.readFileSync(filePath, 'utf-8');
+  const oldBooks = JSON.parse(oldBooksData);
 
   console.log(`Carregando dados a partir de: ${filePath}`);
 
@@ -27,16 +34,16 @@ async function main() {
       data: {
         title: book.title,
         author: book.author,
-        year: book.year,
-        pages: book.pages,
-        rating: book.rating,
-        synopsis: book.synopsis,
-        cover: book.cover,
+        year: book.year || 0,
+        pages: book.pages || 0,
+        rating: book.rating || 0,
+        synopsis: book.synopsis || 'Sem sinopse',
+        cover: book.cover || 'https://via.placeholder.com/150',
         currentPage: 0,
         status: 'QUERO_LER',
         genres: {
           connectOrCreate: genresArray.map((g: string) => ({
-            where: { name: g },
+            where: { name: g }, // precisa ser UNIQUE no schema
             create: { name: g },
           })),
         },

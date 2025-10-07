@@ -16,9 +16,9 @@ enum ReadingStatus {
 
 // Tabela de gêneros
 model Genre {
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
-  books Book[]  @relation("BookGenres")
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  books Book[] @relation("BookGenres")
 }
 
 // Tabela de livros
@@ -26,10 +26,10 @@ model Book {
   id          Int           @id @default(autoincrement())
   title       String
   author      String
-  year        Int
-  pages       Int
-  currentPage Int
-  status      ReadingStatus
+  year        Int           @default(0)
+  pages       Int           @default(0)
+  currentPage Int           @default(0)
+  status      ReadingStatus @default(QUERO_LER)
   isbn        String?       
   cover       String?       
   rating      Float?        
