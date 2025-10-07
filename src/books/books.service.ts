@@ -8,7 +8,9 @@ export class BooksService {
   constructor(private prisma: PrismaService) {}
 
   getBooks() {
-    return this.prisma.book.findMany({ include: { genres: true } });
+    return this.prisma.book.findMany({
+      include: { genres: true },
+    });
   }
 
   getBook(id: number) {
@@ -18,29 +20,47 @@ export class BooksService {
     });
   }
 
-  createBook(data: CreateBookDto) {
-    return this.prisma.book.create({ data });
+  async createBook(data: CreateBookDto) {
+    const { genreIds, ...bookData } = data;
+
+    return this.prisma.book.create({
+      data: {
+        ...bookData,
+        genres: genreIds
+          ? { connect: genreIds.map((id) => ({ id })) }
+          : undefined,
+      },
+      include: { genres: true },
+    });
   }
 
-async updateBook(id: number, data: UpdateBookDto) {
-  return this.prisma.book.update({
-    where: { id },
-    data: {
-      ...data,
-      genres: data.genreIds
-        ? {
-            set: data.genreIds.map((id) => ({ id })),
-          }
-        : undefined,
-    },
-    include: { genres: true },
-  });
-}
+  async updateBook(id: number, data: UpdateBookDto) {
+    const { genreIds, ...bookData } = data;
 
+    // Remove campos undefined (para evitar conflito com o Prisma)
+    const cleanedData = Object.fromEntries(
+      Object.entries(bookData).filter(([_, v]) => v !== undefined)
+    );
 
-
+    return this.prisma.book.update({
+      where: { id },
+      data: {
+        ...cleanedData,
+        ...(genreIds
+          ? {
+              genres: {
+                set: genreIds.map((id) => ({ id })),
+              },
+            }
+          : {}),
+      },
+      include: { genres: true },
+    });
+  }
 
   deleteBook(id: number) {
-    return this.prisma.book.delete({ where: { id } });
+    return this.prisma.book.delete({
+      where: { id },
+    });
   }
 }
