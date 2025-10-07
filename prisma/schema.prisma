@@ -1,48 +1,42 @@
+// prisma/schema.prisma
+
+// 🔹 Configuração do banco
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// 🔹 Prisma Client
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./prisma/dev.db"
-}
-
-// 1.6: Status de Leitura como Enum
-enum ReadingStatus {
-  QUERO_LER
-  LENDO
-  LIDO
-  PAUSADO
-  ABANDONADO
-}
-
-// 1.4: Modelo de Livro Expandido
+// 🔹 Model de Livro
 model Book {
-  id       Int    @id @default(autoincrement())
-  title    String // Obrigatório
-  author   String // Obrigatório
-  year     Int // Obrigatório
-  pages    Int // Obrigatório
-  rating   Float // Obrigatório
-  synopsis String // Obrigatório
-  cover    String // Obrigatório
+  id          Int      @id @default(autoincrement())
+  title       String
+  author      String
+  year        Int
+  pages       Int
+  currentPage Int
+  status      String
+  isbn        String?
+  cover       String
+  rating      Float
+  synopsis    String
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  status      ReadingStatus @default(QUERO_LER) // Não obrigatório na criação (tem padrão)
-  currentPage Int // Obrigatório
-  createdAt   DateTime      @default(now()) // Não obrigatório na criação (tem padrão)
-  updatedAt   DateTime      @updatedAt // Não obrigatório na criação (gerado auto)
-
-  isbn  String? // Opcional
-  notes String? // Opcional
-
-  genres Genre[] // Relacionamento
+  // Relacionamento Many-to-Many com Genre
+  genres      Genre[]
 }
 
-// 1.5: Modelo de Gêneros
+// 🔹 Model de Gênero
 model Genre {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id    Int    @id @default(autoincrement())
+  name  String @unique
 
-  // Relacionamento com Livros
+  // Relacionamento Many-to-Many com Book
   books Book[]
 }
