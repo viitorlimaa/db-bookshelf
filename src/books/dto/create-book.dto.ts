@@ -45,19 +45,18 @@ export class CreateBookDto {
   @Min(0)
   currentPage: number;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   isbn?: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   notes?: string;
 
   @IsOptional()
   @IsEnum(ReadingStatus)
   status?: ReadingStatus;
 
-  // Relacionamento com gêneros via IDs
   @IsOptional()
   @IsArray()
   @IsInt({ each: true })

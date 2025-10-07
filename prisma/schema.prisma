@@ -19,25 +19,19 @@ enum ReadingStatus {
 
 // 1.4: Modelo de Livro Expandido
 model Book {
-  id       Int    @id @default(autoincrement())
-  title    String // Obrigatório
-  author   String // Obrigatório
-  year     Int // Obrigatório
-  pages    Int // Obrigatório
-  rating   Float // Obrigatório
-  synopsis String // Obrigatório
-  cover    String // Obrigatório
-
-  status      ReadingStatus @default(QUERO_LER) // Não obrigatório na criação (tem padrão)
-  currentPage Int // Obrigatório
-  createdAt   DateTime      @default(now()) // Não obrigatório na criação (tem padrão)
-  updatedAt   DateTime      @updatedAt // Não obrigatório na criação (gerado auto)
-
-  isbn  String? // Opcional
-  notes String? // Opcional
-
-  genres Genre[] // Relacionamento
+  id          Int       @id @default(autoincrement())
+  title       String
+  author      String?
+  year        Int?
+  pages       Int?
+  cover       String?
+  synopsis    String?
+  currentPage Int?       @default(0)
+  rating      Float?     @default(0)   // 👈 opcional e com valor padrão
+  status      String?    @default("QUERO_LER")
+  genres      Genre[]    @relation("BookGenres", references: [id])
 }
+
 
 // 1.5: Modelo de Gêneros
 model Genre {

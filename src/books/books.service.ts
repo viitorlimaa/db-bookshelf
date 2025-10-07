@@ -22,22 +22,21 @@ export class BooksService {
     return this.prisma.book.create({ data });
   }
 
-async update(id: number, data: UpdateBookDto) {
-  const { genreIds, ...rest } = data;
-
+async updateBook(id: number, data: UpdateBookDto) {
   return this.prisma.book.update({
     where: { id },
     data: {
-      ...rest,
-      ...(genreIds && {
-        genres: {
-          set: genreIds.map((id: number) => ({ id })),
-        },
-      }),
+      ...data,
+      genres: data.genreIds
+        ? {
+            set: data.genreIds.map((id) => ({ id })),
+          }
+        : undefined,
     },
     include: { genres: true },
   });
 }
+
 
 
 
