@@ -4,6 +4,25 @@ import * as path from 'path';
 
 const prisma = new PrismaClient();
 
+const FIXED_GENRES = [
+  'Literatura Brasileira',
+  'Ficção Científica',
+  'Realismo Mágico',
+  'Ficção',
+  'Fantasia',
+  'Romance',
+  'Biografia',
+  'História',
+  'Autoajuda',
+  'Tecnologia',
+  'Programação',
+  'Negócios',
+  'Psicologia',
+  'Filosofia',
+  'Poesia',
+  'Mistério',
+];
+
 async function main() {
   console.log('Iniciando o processo de seeding...');
 
@@ -11,6 +30,14 @@ async function main() {
   await prisma.book.deleteMany({});
   await prisma.genre.deleteMany({});
   console.log('Tabelas limpas com sucesso.');
+
+  // Popular gêneros fixos
+  for (const name of FIXED_GENRES) {
+    await prisma.genre.create({
+      data: { name },
+    });
+  }
+  console.log('✅ Gêneros fixos populados com sucesso!');
 
   // Carregar dados antigos
   const filePath = path.join(process.cwd(), 'prisma', 'books-DEPRECATED.json');
@@ -51,7 +78,7 @@ async function main() {
     });
   }
 
-  console.log('✅ Seeding finalizado com sucesso!');
+  console.log('✅ Seeding de livros finalizado com sucesso!');
 }
 
 main()
