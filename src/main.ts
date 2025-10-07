@@ -19,13 +19,14 @@ async function bootstrap() {
 
   // ✅ Libera CORS para o frontend (localhost e produção)
   app.enableCors({
-    origin: [
-      'http://localhost:3000', // desenvolvimento local (Next.js)
-      'https://bookshelf-app.vercel.app', // produção (se publicar o front depois)
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-  });
+  origin: [
+    'http://localhost:3000',
+    'https://bookshelf-mobr.vercel.app',
+  ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  credentials: true,
+});
+
 
   // ✅ Garante que o Prisma feche corretamente no shutdown
   const prismaService = app.get(PrismaService);
