@@ -13,8 +13,8 @@ async function bootstrap() {
   // ✅ Libera CORS para o frontend (localhost e produção)
   app.enableCors({
     origin: [
-      'http://localhost:3000',          // desenvolvimento local (Next.js)
-      'https://bookshelf-app.vercel.app', // produção no Vercel
+      'http://localhost:3000',            // desenvolvimento local (Next.js)
+      'https://bookshelf-app.vercel.app', // produção (se publicar o front depois)
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
