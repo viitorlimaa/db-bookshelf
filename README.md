@@ -15,6 +15,8 @@ A arquitetura foi migrada de um sistema de armazenamento baseado em arquivos JSO
 - **Validação de Dados:** Uso de DTOs (Data Transfer Objects) e `class-validator` para garantir que apenas dados válidos cheguem ao banco.
 
 ---
+🌐 **Deploy:** [db-bookshelf.onrender.com](https://db-bookshelf.onrender.com)
+---
 
 ## Arquitetura e Tecnologias
 
@@ -35,13 +37,15 @@ O schema do Prisma define os modelos, relacionamentos e o enum para o status de 
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./prisma/dev.db"
 }
 
+// 1.6: Status de Leitura como Enum
 enum ReadingStatus {
   QUERO_LER
   LENDO
@@ -50,33 +54,26 @@ enum ReadingStatus {
   ABANDONADO
 }
 
+// 1.4: Modelo de Livro Expandido
 model Book {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
-  author      String
-  year        Int
-  pages       Int
-  rating      Float
-  synopsis    String
-  cover       String
-
-  // Campos de rastreamento
-  status      ReadingStatus @default(QUERO_LER)
-  currentPage Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  // Campos opcionais
-  isbn        String?
-  notes       String?
-
-  // Relacionamento Muitos-para-Muitos com Gêneros
-  genres      Genre[]
+  author      String?
+  year        Int?
+  pages       Int?
+  cover       String?
+  synopsis    String?
+  currentPage Int?       @default(0)
+  rating      Float?     @default(0)   
+  status      String?    @default("QUERO_LER")
+  genres      Genre[]    @relation("BookGenres", references: [id])
 }
 
+
+// 1.5: Modelo de Gêneros
 model Genre {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
   // Relacionamento com Livros
   books Book[]
@@ -171,7 +168,6 @@ A API estará disponível em `http://localhost:3000`.
 
 | Método | Rota | Descrição               | Corpo (Body)        |
 | :----- | :--- | :---------------------- | :------------------ |
-| `POST` | `/`  | Cria um novo gênero.    | `{ "name": "..." }` |
 | `GET`  | `/`  | Lista todos os gêneros. | N/A                 |
 
 ---
