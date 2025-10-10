@@ -56,6 +56,8 @@ async function main() {
       synopsis:
         'Um clássico da literatura brasileira que explora ciúme, memória e ambiguidade na narrativa de Bentinho.',
       cover: 'https://covers.openlibrary.org/b/id/8228691-L.jpg',
+      status: 'LIDO',
+      currentPage: 256,
       genre: 'Literatura Brasileira',
     },
     {
@@ -67,6 +69,8 @@ async function main() {
       synopsis:
         'Em um futuro distante, o planeta desértico Arrakis é o centro de uma luta política e espiritual pelo controle da especiaria mais valiosa do universo.',
       cover: 'https://covers.openlibrary.org/b/id/8101356-L.jpg',
+      status: 'LENDO',
+      currentPage: 320,
       genre: 'Ficção Científica',
     },
     {
@@ -78,6 +82,8 @@ async function main() {
       synopsis:
         'A saga da família Buendía na mítica cidade de Macondo, em uma obra-prima do realismo mágico.',
       cover: 'https://covers.openlibrary.org/b/id/8377226-L.jpg',
+      status: 'QUERO_LER',
+      currentPage: 0,
       genre: 'Realismo Mágico',
     },
     {
@@ -89,6 +95,8 @@ async function main() {
       synopsis:
         'A jornada de Frodo Bolseiro para destruir o Um Anel e salvar a Terra Média da sombra de Sauron.',
       cover: 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+      status: 'LENDO',
+      currentPage: 200,
       genre: 'Fantasia',
     },
     {
@@ -100,6 +108,8 @@ async function main() {
       synopsis:
         'Elizabeth Bennet navega entre convenções sociais e o amor inesperado de Mr. Darcy.',
       cover: 'https://covers.openlibrary.org/b/id/8091016-L.jpg',
+      status: 'LIDO',
+      currentPage: 432,
       genre: 'Romance',
     },
     {
@@ -111,6 +121,8 @@ async function main() {
       synopsis:
         'Um thriller repleto de simbologia, segredos religiosos e uma caça a uma verdade milenar.',
       cover: 'https://covers.openlibrary.org/b/id/240726-L.jpg',
+      status: 'QUERO_LER',
+      currentPage: 0,
       genre: 'Mistério',
     },
     {
@@ -122,6 +134,8 @@ async function main() {
       synopsis:
         'Uma entidade maléfica aterroriza a cidade de Derry, ressurgindo a cada 27 anos.',
       cover: 'https://covers.openlibrary.org/b/id/7884866-L.jpg',
+      status: 'LENDO',
+      currentPage: 400,
       genre: 'Terror',
     },
     {
@@ -133,6 +147,8 @@ async function main() {
       synopsis:
         'A biografia definitiva do cofundador da Apple, baseada em entrevistas e acesso direto ao próprio Jobs.',
       cover: 'https://covers.openlibrary.org/b/id/7270135-L.jpg',
+      status: 'LIDO',
+      currentPage: 656,
       genre: 'Biografia',
     },
     {
@@ -144,6 +160,8 @@ async function main() {
       synopsis:
         'Uma análise profunda da evolução da humanidade, das tribos caçadoras às sociedades tecnológicas.',
       cover: 'https://covers.openlibrary.org/b/id/8371261-L.jpg',
+      status: 'QUERO_LER',
+      currentPage: 0,
       genre: 'História',
     },
     {
@@ -155,6 +173,8 @@ async function main() {
       synopsis:
         'Um guia essencial para escrever código legível, eficiente e sustentável.',
       cover: 'https://covers.openlibrary.org/b/id/9641987-L.jpg',
+      status: 'LIDO',
+      currentPage: 464,
       genre: 'Programação',
     },
     {
@@ -166,6 +186,8 @@ async function main() {
       synopsis:
         'Explora como hábitos moldam o comportamento humano e como transformá-los.',
       cover: 'https://covers.openlibrary.org/b/id/8179872-L.jpg',
+      status: 'LENDO',
+      currentPage: 200,
       genre: 'Psicologia',
     },
     {
@@ -177,6 +199,8 @@ async function main() {
       synopsis:
         'Reflexões pessoais do imperador romano sobre virtude, razão e a natureza do universo.',
       cover: 'https://covers.openlibrary.org/b/id/8231998-L.jpg',
+      status: 'QUERO_LER',
+      currentPage: 0,
       genre: 'Filosofia',
     },
   ];
