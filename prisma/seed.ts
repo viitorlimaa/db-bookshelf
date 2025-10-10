@@ -55,7 +55,7 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Um clássico da literatura brasileira que explora ciúme, memória e ambiguidade na narrativa de Bentinho.',
-      cover: 'https://covers.openlibrary.org/b/id/8228691-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/10558903-M.jpg',
       status: 'LIDO',
       currentPage: 256,
       genre: 'Literatura Brasileira',
@@ -68,7 +68,7 @@ async function main() {
       rating: 4.7,
       synopsis:
         'Em um futuro distante, o planeta desértico Arrakis é o centro de uma luta política e espiritual pelo controle da especiaria mais valiosa do universo.',
-      cover: 'https://covers.openlibrary.org/b/id/8101356-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/8200322-M.jpg',
       status: 'LENDO',
       currentPage: 320,
       genre: 'Ficção Científica',
@@ -81,7 +81,7 @@ async function main() {
       rating: 4.9,
       synopsis:
         'A saga da família Buendía na mítica cidade de Macondo, em uma obra-prima do realismo mágico.',
-      cover: 'https://covers.openlibrary.org/b/id/8377226-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/13162734-M.jpg',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Realismo Mágico',
@@ -94,7 +94,7 @@ async function main() {
       rating: 4.9,
       synopsis:
         'A jornada de Frodo Bolseiro para destruir o Um Anel e salvar a Terra Média da sombra de Sauron.',
-      cover: 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/15120679-M.jpg',
       status: 'LENDO',
       currentPage: 200,
       genre: 'Fantasia',
@@ -107,7 +107,7 @@ async function main() {
       rating: 4.7,
       synopsis:
         'Elizabeth Bennet navega entre convenções sociais e o amor inesperado de Mr. Darcy.',
-      cover: 'https://covers.openlibrary.org/b/id/8091016-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/14844177-M.jpg',
       status: 'LIDO',
       currentPage: 432,
       genre: 'Romance',
@@ -120,7 +120,7 @@ async function main() {
       rating: 4.4,
       synopsis:
         'Um thriller repleto de simbologia, segredos religiosos e uma caça a uma verdade milenar.',
-      cover: 'https://covers.openlibrary.org/b/id/240726-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/10578429-M.jpg',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Mistério',
@@ -133,7 +133,7 @@ async function main() {
       rating: 4.6,
       synopsis:
         'Uma entidade maléfica aterroriza a cidade de Derry, ressurgindo a cada 27 anos.',
-      cover: 'https://covers.openlibrary.org/b/id/7884866-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/14563910-M.jpg',
       status: 'LENDO',
       currentPage: 400,
       genre: 'Terror',
@@ -146,7 +146,7 @@ async function main() {
       rating: 4.5,
       synopsis:
         'A biografia definitiva do cofundador da Apple, baseada em entrevistas e acesso direto ao próprio Jobs.',
-      cover: 'https://covers.openlibrary.org/b/id/7270135-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/8043056-M.jpg',
       status: 'LIDO',
       currentPage: 656,
       genre: 'Biografia',
@@ -159,20 +159,20 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Uma análise profunda da evolução da humanidade, das tribos caçadoras às sociedades tecnológicas.',
-      cover: 'https://covers.openlibrary.org/b/id/8371261-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/14540965-M.jpg',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'História',
     },
     {
-      title: 'Clean Code',
+      title: 'Coder Propement',
       author: 'Robert C. Martin',
       year: 2008,
       pages: 464,
       rating: 4.9,
       synopsis:
         'Um guia essencial para escrever código legível, eficiente e sustentável.',
-      cover: 'https://covers.openlibrary.org/b/id/9641987-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/9249618-L.jpg',
       status: 'LIDO',
       currentPage: 464,
       genre: 'Programação',
@@ -185,7 +185,7 @@ async function main() {
       rating: 4.5,
       synopsis:
         'Explora como hábitos moldam o comportamento humano e como transformá-los.',
-      cover: 'https://covers.openlibrary.org/b/id/8179872-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/14621911-M.jpg',
       status: 'LENDO',
       currentPage: 200,
       genre: 'Psicologia',
@@ -198,7 +198,7 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Reflexões pessoais do imperador romano sobre virtude, razão e a natureza do universo.',
-      cover: 'https://covers.openlibrary.org/b/id/8231998-L.jpg',
+      cover: 'https://covers.openlibrary.org/b/id/13264786-M.jpg',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Filosofia',
