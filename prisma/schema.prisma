@@ -8,7 +8,6 @@ datasource db {
   url      = "file:./prisma/dev.db"
 }
 
-// 1.6: Status de Leitura como Enum
 enum ReadingStatus {
   QUERO_LER
   LENDO
@@ -17,7 +16,6 @@ enum ReadingStatus {
   ABANDONADO
 }
 
-// 1.4: Modelo de Livro Expandido
 model Book {
   id          Int       @id @default(autoincrement())
   title       String
@@ -27,17 +25,13 @@ model Book {
   cover       String?
   synopsis    String?
   currentPage Int?       @default(0)
-  rating      Float?     @default(0)   // 👈 opcional e com valor padrão
+  rating      Float?     @default(0)
   status      String?    @default("QUERO_LER")
   genres      Genre[]    @relation("BookGenres", references: [id])
 }
 
-
-// 1.5: Modelo de Gêneros
 model Genre {
   id   Int    @id @default(autoincrement())
   name String @unique
-
-  // Relacionamento com Livros
   books Book[]
 }

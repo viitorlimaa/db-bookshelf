@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
@@ -39,7 +39,7 @@ export class BooksService {
 
     // Remove campos undefined (para evitar conflito com o Prisma)
     const cleanedData = Object.fromEntries(
-      Object.entries(bookData).filter(([_, v]) => v !== undefined)
+      Object.entries(bookData).filter(([_, v]) => v !== undefined),
     );
 
     return this.prisma.book.update({
@@ -58,11 +58,11 @@ export class BooksService {
     });
   }
 
- async deleteBook(id: number) {
-  await this.prisma.book.delete({
-    where: { id },
-  });
-  // não retorna nada -> força o Nest a respeitar o 204 do controller
-  return;
-}
+  async deleteBook(id: number) {
+    await this.prisma.book.delete({
+      where: { id },
+    });
+    // não retorna nada -> força o Nest a respeitar o 204 do controller
+    return;
+  }
 }
