@@ -17,23 +17,22 @@ async function bootstrap() {
     }),
   );
 
-  // ✅ Libera CORS para o frontend (localhost e produção)
- app.enableCors({
-  origin: [
-    "http://localhost:3000",            // local
-    "https://bookshelf-mobr.vercel.app" // front deployado
-  ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  allowedHeaders: ["Content-Type", "Authorization"], // adicione se necessário
-  credentials: true, // se usar cookies/autenticação
-});
+  // Libera CORS para o frontend (localhost e produção)
+  app.enableCors({
+    origin: [
+      'http://localhost:3000', // local
+      'https://bookshelf-mobr.vercel.app', // front deployado
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'], // adicione se necessário
+    credentials: true, // se usar cookies/autenticação
+  });
 
-
-  // ✅ Garante que o Prisma feche corretamente no shutdown
+  // Garante que o Prisma feche corretamente no shutdown
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  // ✅ Configuração do Swagger
+  // Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('Bookshelf API')
     .setDescription(
@@ -47,9 +46,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  // ✅ Escuta na porta padrão (Render define PORT automaticamente)
-  await app.listen(process.env.PORT || 3000);
-  console.log(`🚀 Aplicação rodando em: ${await app.getUrl()}`);
+  // Escuta na porta padrão (Render define PORT automaticamente)
+  await app.listen(process.env.PORT || 3001);
+  console.log(`Aplicação rodando em: ${await app.getUrl()}`);
 }
 
 bootstrap();
