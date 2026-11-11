@@ -6,10 +6,6 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🚀 Iniciando o processo de seeding...');
 
-  await prisma.book.deleteMany({});
-  await prisma.genre.deleteMany({});
-  console.log('🧹 Tabelas limpas.');
-
   // ===============================
   // 1️⃣ Gêneros fixos
   // ===============================
@@ -205,30 +201,34 @@ async function main() {
     },
   ];
 
-  for (const book of books) {
-    const genre = await prisma.genre.findUnique({
-      where: { name: book.genre },
-    });
+  if ((await prisma.book.count()) === 0) {
+    for (const book of books) {
+      const genre = await prisma.genre.findUnique({
+        where: { name: book.genre },
+      });
 
-    if (!genre) continue;
+      if (!genre) continue;
 
-    await prisma.book.create({
-      data: {
-        title: book.title,
-        author: book.author,
-        year: book.year,
-        pages: book.pages,
-        rating: book.rating,
-        synopsis: book.synopsis,
-        cover: book.cover,
-        currentPage: 0,
-        status: 'QUERO_LER',
-        genres: { connect: [{ id: genre.id }] },
-      },
-    });
+      await prisma.book.create({
+        data: {
+          title: book.title,
+          author: book.author,
+          year: book.year,
+          pages: book.pages,
+          rating: book.rating,
+          synopsis: book.synopsis,
+          cover: book.cover,
+          currentPage: 0,
+          status: 'QUERO_LER',
+          genres: { connect: [{ id: genre.id }] },
+        },
+      });
+    }
+
+    console.log(`✅ ${books.length} livros inseridos com capas reais.`);
+  } else {
+    console.log('ℹ️ Livros existentes encontrados; seed de livros ignorado.');
   }
-
-  console.log(`✅ ${books.length} livros inseridos com capas reais.`);
 }
 
 main()
