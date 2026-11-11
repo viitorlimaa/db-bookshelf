@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./prisma/dev.db"
+  url      = env("DATABASE_URL")
 }
 
 enum ReadingStatus {
@@ -27,7 +27,9 @@ model Book {
   currentPage Int?       @default(0)
   rating      Float?     @default(0)
   status      String?    @default("QUERO_LER")
-  genres      Genre[]    @relation("BookGenres", references: [id])
+  isbn        String?
+  notes       String?
+  genres      Genre[]
 }
 
 model Genre {

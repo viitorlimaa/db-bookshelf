@@ -42,7 +42,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./prisma/dev.db"
+  url      = env("DATABASE_URL")
 }
 
 // 1.6: Status de Leitura como Enum
@@ -66,7 +66,9 @@ model Book {
   currentPage Int?       @default(0)
   rating      Float?     @default(0)   
   status      String?    @default("QUERO_LER")
-  genres      Genre[]    @relation("BookGenres", references: [id])
+  isbn        String?
+  notes       String?
+  genres      Genre[]
 }
 
 
@@ -110,7 +112,7 @@ Crie um arquivo `.env` na raiz do projeto e adicione a URL do banco de dados.
 
 ```env
 # .env
-DATABASE_URL="file:./prisma/dev.db"
+DATABASE_URL="file:./dev.db"
 ```
 
 ### 4\. Migração do Banco de Dados
@@ -118,7 +120,7 @@ DATABASE_URL="file:./prisma/dev.db"
 Este comando cria o arquivo do banco de dados SQLite e executa as migrações para criar as tabelas.
 
 ```bash
-npm run prisma:migrate
+npx prisma migrate dev
 ```
 
 ### 5\. (Opcional) Popular o Banco com Dados Iniciais
@@ -146,9 +148,8 @@ A API estará disponível em `http://localhost:3000`.
 - `npm run start:dev`: Inicia a aplicação em modo de desenvolvimento.
 - `npm run build`: Compila o projeto para produção (gera a pasta `dist`).
 - `npm run start:prod`: Inicia a aplicação em modo de produção (a partir da pasta `dist`).
-- `npm run prisma:migrate`: Aplica novas migrações ao banco de dados.
+- `npx prisma migrate dev`: Cria e aplica migrações no ambiente de desenvolvimento.
 - `npm run prisma:seed`: Executa o script para popular o banco com dados iniciais.
-- `npm run db:reset`: Apaga e recria o banco de dados a partir das migrações (útil para desenvolvimento).
 
 ---
 

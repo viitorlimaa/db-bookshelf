@@ -56,7 +56,7 @@ Adicione o seguinte conteúdo ao arquivo `.env`:
 ```env
 # URL de conexão para o banco de dados SQLite
 # O arquivo dev.db será criado dentro da pasta /prisma
-DATABASE_URL="file:./prisma/dev.db"
+DATABASE_URL="file:./dev.db"
 ```
 
 ### 4\. Executar a Migração do Banco de Dados
@@ -64,7 +64,7 @@ DATABASE_URL="file:./prisma/dev.db"
 Este é um passo crucial. O comando abaixo irá ler o `schema.prisma`, criar o arquivo de banco de dados `dev.db` e gerar as tabelas (`Book`, `Genre`, etc.).
 
 ```bash
-npm run prisma:migrate
+npx prisma migrate dev
 ```
 
 Ao ser executado pela primeira vez, ele pedirá um nome para a migração (ex: "init").
@@ -112,7 +112,7 @@ Todos os comandos de gerenciamento do banco foram adicionados como scripts no `p
 - **Aplicar mudanças no schema:** Sempre que você alterar os modelos no arquivo `prisma/schema.prisma`, rode:
 
   ```bash
-  npm run prisma:migrate
+  npx prisma migrate dev
   ```
 
 - **Popular o banco:** Para executar o script `prisma/seed.ts` e popular o banco com dados iniciais:
@@ -124,13 +124,13 @@ Todos os comandos de gerenciamento do banco foram adicionados como scripts no `p
 - **Resetar o banco:** Para **apagar completamente** o banco de dados, aplicar todas as migrações novamente e deixá-lo limpo (ótimo para desenvolvimento):
 
   ```bash
-  npm run db:reset
+  npx prisma migrate reset
   ```
 
 - **Gerar o Prisma Client manualmente:** Geralmente não é necessário devido ao hook `postinstall`, mas pode ser útil:
 
   ```bash
-  npm run prisma:generate
+  npx prisma generate
   ```
 
 ---
