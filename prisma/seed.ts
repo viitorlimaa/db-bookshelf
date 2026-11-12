@@ -218,8 +218,8 @@ async function main() {
           rating: book.rating,
           synopsis: book.synopsis,
           cover: book.cover,
-          currentPage: 0,
-          status: 'QUERO_LER',
+          currentPage: book.currentPage,
+          status: book.status,
           genres: { connect: [{ id: genre.id }] },
         },
       });

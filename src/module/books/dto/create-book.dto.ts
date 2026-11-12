@@ -22,28 +22,34 @@ export class CreateBookDto {
   @IsNotEmpty()
   author: string;
 
+  @IsOptional()
   @IsInt()
-  year: number;
+  year?: number;
 
+  @IsOptional()
   @IsInt()
-  @Min(1)
-  pages: number;
+  @Min(0)
+  pages?: number;
 
+  @IsOptional()
   @IsNumber()
   @Min(0)
   @Max(5)
-  rating: number;
+  rating?: number;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  synopsis: string;
+  synopsis?: string;
 
+  @IsOptional()
   @IsUrl()
-  cover: string;
+  cover?: string;
 
+  @IsOptional()
   @IsInt()
   @Min(0)
-  currentPage: number;
+  currentPage?: number;
 
   @IsOptional()
   @IsString()
