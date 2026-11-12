@@ -1,0 +1,42 @@
+# Keep the free Render service awake; it spins down after 15 minutes without inbound traffic.
+# Configure RENDER_SERVICE_URL as a repository Actions variable with the service's base URL.
+name: Keep Render service alive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the health endpoint
+        env:
+          RENDER_SERVICE_URL: ${{ vars.RENDER_SERVICE_URL }}
+        run: |
+          if [ -z "$RENDER_SERVICE_URL" ]; then
+            echo "::error::Set the RENDER_SERVICE_URL repository variable to the service base URL."
+            exit 1
+          fi
+
+          status="$(curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            --max-time 90 \
+            --retry 1 \
+            --retry-delay 10 \
+            --retry-connrefused \
+            --output /dev/null \
+            --write-out '%{http_code}' \
+            "${RENDER_SERVICE_URL%/}/health")"
+
+          if [ "$status" != "200" ]; then
+            echo "::error::Health endpoint returned HTTP $status; expected 200."
+            exit 1
+          fi
