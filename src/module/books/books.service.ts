@@ -46,7 +46,7 @@ export class BooksService {
 
     // Remove campos undefined (para evitar conflito com o Prisma)
     const cleanedData = Object.fromEntries(
-      Object.entries(bookData).filter(([_, v]) => v !== undefined),
+      Object.entries(bookData).filter(([, value]) => value !== undefined),
     );
 
     try {
