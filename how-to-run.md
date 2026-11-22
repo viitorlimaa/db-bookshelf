@@ -135,6 +135,18 @@ Todos os comandos de gerenciamento do banco foram adicionados como scripts no `p
 
 ---
 
+## 🧪 Testes E2E
+
+Execute a suíte E2E com:
+
+```bash
+npm run test:e2e
+```
+
+O comando cria o banco SQLite de teste em `prisma/test.db`, aplica as migrations antes dos testes e remove o banco ao terminar.
+
+---
+
 ## 🌐 Endpoints da API
 
 A API segue os padrões RESTful para o recurso de livros.
