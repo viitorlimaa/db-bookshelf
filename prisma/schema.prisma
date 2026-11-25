@@ -1,11 +1,11 @@
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 enum ReadingStatus {
@@ -17,23 +17,23 @@ enum ReadingStatus {
 }
 
 model Book {
-  id          Int       @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   title       String
   author      String?
   year        Int?
   pages       Int?
   cover       String?
   synopsis    String?
-  currentPage Int?       @default(0)
-  rating      Float?     @default(0)
-  status      String?    @default("QUERO_LER")
+  currentPage Int?          @default(0)
+  rating      Float?        @default(0)
+  status      ReadingStatus @default(QUERO_LER)
   isbn        String?
   notes       String?
   genres      Genre[]
 }
 
 model Genre {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id    Int    @id @default(autoincrement())
+  name  String @unique
   books Book[]
 }

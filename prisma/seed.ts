@@ -1,5 +1,5 @@
 // prisma/seed.ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, ReadingStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -219,7 +219,7 @@ async function main() {
           synopsis: book.synopsis,
           cover: book.cover,
           currentPage: book.currentPage,
-          status: book.status,
+          status: book.status as ReadingStatus,
           genres: { connect: [{ id: genre.id }] },
         },
       });
