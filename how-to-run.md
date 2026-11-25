@@ -4,11 +4,11 @@ Uma API RESTful robusta, construída com [NestJS](https://nestjs.com/) e [Prisma
 
 ## Visão Geral da Arquitetura
 
-Este projeto utiliza uma arquitetura modular comum em aplicações NestJS, separando as responsabilidades em Módulos, Controladores e Serviços. O Prisma ORM é usado como a camada de acesso a dados, comunicando-se com um banco de dados SQLite para persistência.
+Este projeto utiliza uma arquitetura modular comum em aplicações NestJS, separando as responsabilidades em Módulos, Controladores e Serviços. O Prisma ORM é usado como a camada de acesso a dados, comunicando-se com PostgreSQL.
 
 - **Framework**: NestJS v11
 - **ORM**: Prisma v5
-- **Banco de Dados**: SQLite
+- **Banco de Dados**: PostgreSQL
 - **Linguagem**: TypeScript v5
 - **Validação**: `class-validator` e DTOs (Data Transfer Objects)
 
@@ -54,14 +54,14 @@ touch .env
 Adicione o seguinte conteúdo ao arquivo `.env`:
 
 ```env
-# URL de conexão para o banco de dados SQLite
-# O arquivo dev.db será criado dentro da pasta /prisma
-DATABASE_URL="file:./dev.db"
+# PostgreSQL local iniciado pelo docker-compose.yml
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
+DIRECT_DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
 ```
 
 ### 4\. Executar a Migração do Banco de Dados
 
-Este é um passo crucial. O comando abaixo irá ler o `schema.prisma`, criar o arquivo de banco de dados `dev.db` e gerar as tabelas (`Book`, `Genre`, etc.).
+Este é um passo crucial. O comando abaixo lê o `schema.prisma` e cria as tabelas no PostgreSQL configurado.
 
 ```bash
 npx prisma migrate dev
@@ -143,7 +143,7 @@ Execute a suíte E2E com:
 npm run test:e2e
 ```
 
-O comando cria o banco SQLite de teste em `prisma/test.db`, aplica as migrations antes dos testes e remove o banco ao terminar.
+O comando aplica as migrations em um PostgreSQL informado por `DATABASE_URL` antes dos testes. Localmente, use o banco `bookshelf_test` ou o serviço do Docker Compose.
 
 ---
 
@@ -169,7 +169,7 @@ Para fazer o deploy desta aplicação em uma plataforma como o Render, siga esta
 2.  **Comando de Build:**
 
     ```bash
-    npm install && npx prisma migrate deploy && npm run build
+    npm install && npx prisma migrate deploy && npm run build && npm run prisma:seed
     ```
 
     - O comando `prisma migrate deploy` é a versão segura para produção que apenas aplica migrações existentes.
@@ -178,7 +178,7 @@ Para fazer o deploy desta aplicação em uma plataforma como o Render, siga esta
     ```bash
     npm run start:prod
     ```
-4.  **Disco Persistente (Obrigatório para SQLite):**
-    - Crie um disco persistente com um **Mount Path** de `/data`.
+4.  **Banco gerenciado:**
+    - Use PostgreSQL no Neon, Supabase ou outro provedor gerenciado.
 5.  **Variáveis de Ambiente:**
-    - Configure a variável `DATABASE_URL` com o valor `file:/data/bookshelf.db` para garantir que o banco seja salvo no disco persistente.
+    - Configure `DATABASE_URL` com a URL PostgreSQL fornecida pelo provedor gerenciado.

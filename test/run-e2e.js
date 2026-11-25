@@ -1,12 +1,14 @@
 const { spawnSync } = require('node:child_process');
-const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
-const databaseUrl = 'file:./test.db';
-const databasePath = path.join(root, 'prisma', 'test.db');
-const databaseFiles = [databasePath, `${databasePath}-journal`];
+const databaseUrl =
+  process.env.DATABASE_URL ||
+  'postgresql://postgres:postgres@localhost:5432/bookshelf_test';
+const directDatabaseUrl =
+  process.env.DIRECT_DATABASE_URL || databaseUrl;
 const env = { ...process.env, DATABASE_URL: databaseUrl };
+env.DIRECT_DATABASE_URL = directDatabaseUrl;
 
 function run(script, args) {
   const result = spawnSync(process.execPath, [script, ...args], {
@@ -27,14 +29,7 @@ function run(script, args) {
   return true;
 }
 
-function removeTestDatabase() {
-  for (const file of databaseFiles) {
-    fs.rmSync(file, { force: true });
-  }
-}
-
 try {
-  removeTestDatabase();
   if (
     run(
       path.join(root, 'node_modules', 'prisma', 'build', 'index.js'),
@@ -49,6 +44,4 @@ try {
 } catch (error) {
   console.error(error);
   process.exitCode = 1;
-} finally {
-  removeTestDatabase();
 }

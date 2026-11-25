@@ -4,7 +4,7 @@
 
 Este repositório contém o backend da aplicação **Bookshelf**, uma API RESTful robusta construída com **NestJS** e **Prisma**. O projeto serve como uma plataforma para gerenciar uma coleção pessoal de livros, rastrear o progresso de leitura e organizar títulos por gênero.
 
-A arquitetura foi migrada de um sistema de armazenamento baseado em arquivos JSON para um banco de dados **SQLite**, proporcionando maior performance, integridade de dados, escalabilidade e segurança de tipos (type-safety) de ponta a ponta.
+A arquitetura usa PostgreSQL para persistência gerenciada, integridade de dados, escalabilidade e segurança de tipos (type-safety) de ponta a ponta.
 
 ### Principais Funcionalidades
 
@@ -22,7 +22,7 @@ A arquitetura foi migrada de um sistema de armazenamento baseado em arquivos JSO
 
 - **Framework:** [NestJS](https://nestjs.com/)
 - **ORM (Object-Relational Mapping):** [Prisma](https://www.prisma.io/)
-- **Banco de Dados:** [SQLite](https://www.sqlite.org/index.html)
+- **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/)
 - **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
 - **Validação:** `class-validator` & `class-transformer`
 
@@ -37,12 +37,12 @@ O schema do Prisma define os modelos, relacionamentos e o enum para o status de 
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 // 1.6: Status de Leitura como Enum
@@ -65,7 +65,7 @@ model Book {
   synopsis    String?
   currentPage Int?       @default(0)
   rating      Float?     @default(0)   
-  status      String?    @default("QUERO_LER")
+  status      ReadingStatus @default(QUERO_LER)
   isbn        String?
   notes       String?
   genres      Genre[]
@@ -111,13 +111,14 @@ npm install
 Crie um arquivo `.env` na raiz do projeto e adicione a URL do banco de dados.
 
 ```env
-# .env
-DATABASE_URL="file:./dev.db"
+# PostgreSQL local
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
+DIRECT_DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
 ```
 
 ### 4\. Migração do Banco de Dados
 
-Este comando cria o arquivo do banco de dados SQLite e executa as migrações para criar as tabelas.
+Este comando aplica as migrações PostgreSQL e cria as tabelas no banco configurado.
 
 ```bash
 npx prisma migrate dev
@@ -175,14 +176,12 @@ A API estará disponível em `http://localhost:3000`.
 
 ## ☁️ Considerações sobre Deploy
 
-Para fazer o deploy desta aplicação em plataformas como [Render](https://render.com/), é crucial lidar com a natureza baseada em arquivo do SQLite.
+Para fazer o deploy desta aplicação no Render, use uma URL PostgreSQL gerenciada.
 
-- **Disco Persistente:** É **obrigatório** configurar um disco persistente para armazenar o arquivo do banco de dados. O sistema de arquivos padrão de serviços de nuvem é efêmero e será apagado a cada deploy.
-  - **Mount Path Sugerido:** `/data`
-- **Variável de Ambiente de Produção:** A `DATABASE_URL` deve apontar para o disco persistente.
-  - `DATABASE_URL="file:/data/bookshelf.db"`
+- **Variável de Ambiente de Produção:** Configure `DATABASE_URL` com a URL do banco gerenciado.
+- Use `DIRECT_DATABASE_URL` com a conexão direta do provedor quando `DATABASE_URL` usa um pooler.
 - **Comando de Build:** O processo de build deve incluir a execução das migrações.
-  - `npm install && npx prisma migrate deploy && npm run build`
+  - `npm install && npx prisma migrate deploy && npm run build && npm run prisma:seed`
 - **Comando de Start:** Execute a versão de produção.
   - `npm run start:prod`
 
