@@ -51,7 +51,8 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Um clássico da literatura brasileira que explora ciúme, memória e ambiguidade na narrativa de Bentinho.',
-      cover: 'https://covers.openlibrary.org/b/id/10558903-M.jpg',
+      isbn: '9788525406798',
+      cover: 'https://covers.openlibrary.org/b/id/10558903-L.jpg?default=false',
       status: 'LIDO',
       currentPage: 256,
       genre: 'Literatura Brasileira',
@@ -64,7 +65,8 @@ async function main() {
       rating: 4.7,
       synopsis:
         'Em um futuro distante, o planeta desértico Arrakis é o centro de uma luta política e espiritual pelo controle da especiaria mais valiosa do universo.',
-      cover: 'https://covers.openlibrary.org/b/id/8200322-M.jpg',
+      isbn: '9786586064698',
+      cover: 'https://covers.openlibrary.org/b/id/15228506-L.jpg?default=false',
       status: 'LENDO',
       currentPage: 320,
       genre: 'Ficção Científica',
@@ -77,7 +79,8 @@ async function main() {
       rating: 4.9,
       synopsis:
         'A saga da família Buendía na mítica cidade de Macondo, em uma obra-prima do realismo mágico.',
-      cover: 'https://covers.openlibrary.org/b/id/13162734-M.jpg',
+      isbn: '9788501012074',
+      cover: 'https://covers.openlibrary.org/b/id/13162734-L.jpg?default=false',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Realismo Mágico',
@@ -90,7 +93,8 @@ async function main() {
       rating: 4.9,
       synopsis:
         'A jornada de Frodo Bolseiro para destruir o Um Anel e salvar a Terra Média da sombra de Sauron.',
-      cover: 'https://covers.openlibrary.org/b/id/15120679-M.jpg',
+      isbn: '9789897773921',
+      cover: 'https://covers.openlibrary.org/b/id/15120679-L.jpg?default=false',
       status: 'LENDO',
       currentPage: 200,
       genre: 'Fantasia',
@@ -103,7 +107,8 @@ async function main() {
       rating: 4.7,
       synopsis:
         'Elizabeth Bennet navega entre convenções sociais e o amor inesperado de Mr. Darcy.',
-      cover: 'https://covers.openlibrary.org/b/id/14844177-M.jpg',
+      isbn: '9789721029842',
+      cover: 'https://covers.openlibrary.org/b/id/14844177-L.jpg?default=false',
       status: 'LIDO',
       currentPage: 432,
       genre: 'Romance',
@@ -116,7 +121,8 @@ async function main() {
       rating: 4.4,
       synopsis:
         'Um thriller repleto de simbologia, segredos religiosos e uma caça a uma verdade milenar.',
-      cover: 'https://covers.openlibrary.org/b/id/10578429-M.jpg',
+      isbn: '9788575421130',
+      cover: 'https://covers.openlibrary.org/b/id/10578429-L.jpg?default=false',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Mistério',
@@ -129,7 +135,8 @@ async function main() {
       rating: 4.6,
       synopsis:
         'Uma entidade maléfica aterroriza a cidade de Derry, ressurgindo a cada 27 anos.',
-      cover: 'https://covers.openlibrary.org/b/id/14563910-M.jpg',
+      isbn: '9788560280940',
+      cover: 'https://covers.openlibrary.org/b/id/14563910-L.jpg?default=false',
       status: 'LENDO',
       currentPage: 400,
       genre: 'Terror',
@@ -142,7 +149,8 @@ async function main() {
       rating: 4.5,
       synopsis:
         'A biografia definitiva do cofundador da Apple, baseada em entrevistas e acesso direto ao próprio Jobs.',
-      cover: 'https://covers.openlibrary.org/b/id/8043056-M.jpg',
+      isbn: '9788535919714',
+      cover: 'https://covers.openlibrary.org/b/id/12374726-L.jpg?default=false',
       status: 'LIDO',
       currentPage: 656,
       genre: 'Biografia',
@@ -155,20 +163,22 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Uma análise profunda da evolução da humanidade, das tribos caçadoras às sociedades tecnológicas.',
-      cover: 'https://covers.openlibrary.org/b/id/14540965-M.jpg',
+      isbn: '9788535933925',
+      cover: 'https://covers.openlibrary.org/b/id/14540965-L.jpg?default=false',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'História',
     },
     {
-      title: 'Coder Propement',
+      title: 'Código Limpo',
       author: 'Robert C. Martin',
       year: 2008,
       pages: 464,
       rating: 4.9,
       synopsis:
         'Um guia essencial para escrever código legível, eficiente e sustentável.',
-      cover: 'https://covers.openlibrary.org/b/id/9249618-L.jpg',
+      isbn: '9788576082675',
+      cover: 'https://covers.openlibrary.org/b/id/12004890-L.jpg?default=false',
       status: 'LIDO',
       currentPage: 464,
       genre: 'Programação',
@@ -181,7 +191,8 @@ async function main() {
       rating: 4.5,
       synopsis:
         'Explora como hábitos moldam o comportamento humano e como transformá-los.',
-      cover: 'https://covers.openlibrary.org/b/id/14621911-M.jpg',
+      isbn: '9788539004256',
+      cover: 'https://covers.openlibrary.org/b/id/14621911-L.jpg?default=false',
       status: 'LENDO',
       currentPage: 200,
       genre: 'Psicologia',
@@ -194,7 +205,8 @@ async function main() {
       rating: 4.8,
       synopsis:
         'Reflexões pessoais do imperador romano sobre virtude, razão e a natureza do universo.',
-      cover: 'https://covers.openlibrary.org/b/id/13264786-M.jpg',
+      isbn: '9786587885339',
+      cover: 'https://covers.openlibrary.org/b/id/13264786-L.jpg?default=false',
       status: 'QUERO_LER',
       currentPage: 0,
       genre: 'Filosofia',
@@ -217,6 +229,7 @@ async function main() {
           pages: book.pages,
           rating: book.rating,
           synopsis: book.synopsis,
+          isbn: book.isbn,
           cover: book.cover,
           currentPage: book.currentPage,
           status: book.status as ReadingStatus,
@@ -227,7 +240,36 @@ async function main() {
 
     console.log(`✅ ${books.length} livros inseridos com capas reais.`);
   } else {
-    console.log('ℹ️ Livros existentes encontrados; seed de livros ignorado.');
+    let updatedBooks = 0;
+
+    for (const book of books) {
+      const titleAliases =
+        book.title === 'Código Limpo'
+          ? ['Código Limpo', 'Coder Propement']
+          : [book.title];
+      const existingBook = await prisma.book.findFirst({
+        where: {
+          author: book.author,
+          title: { in: titleAliases },
+        },
+      });
+
+      if (!existingBook) continue;
+
+      await prisma.book.update({
+        where: { id: existingBook.id },
+        data: {
+          title: book.title,
+          isbn: book.isbn,
+          cover: book.cover,
+        },
+      });
+      updatedBooks += 1;
+    }
+
+    console.log(
+      `✅ ${updatedBooks} livros do seed atualizados; outros registros preservados.`,
+    );
   }
 }
 
