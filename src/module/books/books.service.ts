@@ -10,6 +10,7 @@ export class BooksService {
 
   getBooks() {
     return this.prisma.book.findMany({
+      orderBy: { id: 'asc' },
       include: { genres: true },
     });
   }

@@ -13,10 +13,7 @@ export function configureApp(app: INestApplication): void {
   );
 
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://bookshelf-mobr.vercel.app',
-    ],
+    origin: ['http://localhost:3000', 'https://bookshelf-mobr.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
