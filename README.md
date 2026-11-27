@@ -1,193 +1,86 @@
-# Projeto Bookshelf - API 📚
+# Bookshelf API
 
-## Visão Geral
+API REST para cadastro e organização de uma biblioteca pessoal. [Deploy](https://db-bookshelf.onrender.com) · [Swagger](https://db-bookshelf.onrender.com/api) · [Repositório do front](https://github.com/viitorlimaa/bookshelf)
 
-Este repositório contém o backend da aplicação **Bookshelf**, uma API RESTful robusta construída com **NestJS** e **Prisma**. O projeto serve como uma plataforma para gerenciar uma coleção pessoal de livros, rastrear o progresso de leitura e organizar títulos por gênero.
+## Stack
 
-A arquitetura usa PostgreSQL para persistência gerenciada, integridade de dados, escalabilidade e segurança de tipos (type-safety) de ponta a ponta.
+NestJS | TypeScript | Prisma | PostgreSQL | Jest | Render
 
-### Principais Funcionalidades
+## Endpoints
 
-- **Gerenciamento de Livros (CRUD):** Operações completas para criar, ler, atualizar e deletar livros.
-- **Modelo de Dados Expandido:** Rastreamento de status de leitura, progresso, anotações, ISBN e mais.
-- **Gerenciamento de Gêneros:** Sistema dinâmico para adicionar e consultar categorias de livros.
-- **Banco de Dados Relacional:** Uso do Prisma ORM para garantir relacionamentos e integridade dos dados.
-- **Validação de Dados:** Uso de DTOs (Data Transfer Objects) e `class-validator` para garantir que apenas dados válidos cheguem ao banco.
+| Método | Rota | Descrição | Status |
+| --- | --- | --- | --- |
+| `POST` | `/books` | Cria um livro e associa gêneros opcionais. | `201` |
+| `GET` | `/books` | Lista os livros e seus gêneros. | `200` |
+| `GET` | `/books/:id` | Busca um livro pelo ID inteiro. | `200`, `404` |
+| `PATCH` | `/books/:id` | Atualiza os campos informados. | `200`, `404` |
+| `DELETE` | `/books/:id` | Remove um livro. | `204`, `404` |
+| `GET` | `/genres` | Lista os gêneros cadastrados. | `200` |
+| `GET` | `/health` | Retorna estado da API sem consultar o banco. | `200` |
 
----
-🌐 **Deploy:** [db-bookshelf.onrender.com](https://db-bookshelf.onrender.com)
----
+## Modelo de dados
 
-## Arquitetura e Tecnologias
+`Book` contém título, autor, ano, páginas, progresso, avaliação, status, capa e gêneros. `Genre` contém ID e nome único.
+`Book` e `Genre` têm relação muitos para muitos. `ReadingStatus` aceita `QUERO_LER`, `LENDO`, `LIDO`, `PAUSADO` e `ABANDONADO`.
+IDs são inteiros; a API usa DTOs com validação de tipos e campos obrigatórios. O schema completo está em [`prisma/schema.prisma`](prisma/schema.prisma).
 
-- **Framework:** [NestJS](https://nestjs.com/)
-- **ORM (Object-Relational Mapping):** [Prisma](https://www.prisma.io/)
-- **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/)
-- **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
-- **Validação:** `class-validator` & `class-transformer`
+## Rodando localmente
 
----
-
-## Estrutura do Banco de Dados (`schema.prisma`)
-
-O schema do Prisma define os modelos, relacionamentos e o enum para o status de leitura.
-
-```prisma
-// prisma/schema.prisma
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
-}
-
-// 1.6: Status de Leitura como Enum
-enum ReadingStatus {
-  QUERO_LER
-  LENDO
-  LIDO
-  PAUSADO
-  ABANDONADO
-}
-
-// 1.4: Modelo de Livro Expandido
-model Book {
-  id          Int       @id @default(autoincrement())
-  title       String
-  author      String?
-  year        Int?
-  pages       Int?
-  cover       String?
-  synopsis    String?
-  currentPage Int?       @default(0)
-  rating      Float?     @default(0)   
-  status      ReadingStatus @default(QUERO_LER)
-  isbn        String?
-  notes       String?
-  genres      Genre[]
-}
-
-
-// 1.5: Modelo de Gêneros
-model Genre {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
-  // Relacionamento com Livros
-  books Book[]
-}
-```
-
-````
-
----
-
-## 🚀 Guia de Instalação e Configuração
-
-Siga os passos abaixo para configurar e executar o ambiente de desenvolvimento local.
-
-### 1\. Pré-requisitos
-
-- Node.js (v18 ou superior)
-- npm ou Yarn
-
-### 2\. Clonar e Instalar
+Pré-requisitos: Node.js 20+, npm e Docker.
 
 ```bash
-# Clone o repositório
-git clone <URL_DO_SEU_REPOSITORIO>
-cd bookshelf-backend
-
-# Instale as dependências
-npm install
+docker compose up -d
+cp .env-example .env
+npm ci
+npx prisma migrate dev
+npm run prisma:seed
+npm run start:dev
 ```
 
-### 3\. Configurar Variáveis de Ambiente
+No PowerShell: `Copy-Item .env-example .env`.
+A API fica em `http://localhost:3001` e o Swagger em `http://localhost:3001/api`.
 
-Crie um arquivo `.env` na raiz do projeto e adicione a URL do banco de dados.
+## Variáveis de ambiente
+
+| Nome | Exemplo | Finalidade |
+| --- | --- | --- |
+| `DATABASE_URL` | `postgresql://postgres:postgres@localhost:5432/bookshelf` | Conexão usada pela aplicação e pelo Prisma. |
+| `DIRECT_DATABASE_URL` | `postgresql://postgres:postgres@localhost:5432/bookshelf` | Conexão direta usada em migrações. |
+| `PORT` | `3001` | Porta HTTP; o Render define automaticamente. |
+
+Exemplo local:
 
 ```env
-# PostgreSQL local
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
 DIRECT_DATABASE_URL="postgresql://postgres:postgres@localhost:5432/bookshelf"
 ```
 
-### 4\. Migração do Banco de Dados
+## Testes e CI
 
-Este comando aplica as migrações PostgreSQL e cria as tabelas no banco configurado.
-
-```bash
-npx prisma migrate dev
-```
-
-### 5\. (Opcional) Popular o Banco com Dados Iniciais
-
-Para migrar os dados do antigo arquivo `books-DEPRECATED.json` para o banco, execute o script de seed.
+Jest cobre serviços e controllers unitariamente; o script E2E aplica migrações e executa testes HTTP com PostgreSQL real.
+A CI em pull requests para `main` bloqueia arquivos `.db`, lint, build, testes unitários e E2E em Node.js 20.
 
 ```bash
-npm run prisma:seed
+npm test
+npm run test:e2e
+npm run lint
+npm run build
 ```
 
-### 6\. Iniciar a Aplicação
+## Deploy
 
-Execute o servidor em modo de desenvolvimento. Ele reiniciará automaticamente a cada alteração de código.
+Configure um PostgreSQL gerenciado e `DATABASE_URL` e `DIRECT_DATABASE_URL` no Render.
+Build: `npm ci && npx prisma migrate deploy && npm run build`.
+Start: `npm run start:prod`.
+O health check usa `GET /health`; o workflow keep-alive pode consultar a URL configurada em `RENDER_SERVICE_URL` a cada 10 minutos.
 
-```bash
-npm run start:dev
-```
+## Decisões técnicas
 
-A API estará disponível em `http://localhost:3000`.
+- **Seed idempotente — reexecutar sem duplicar gêneros — trade-off:** livros conhecidos podem ser atualizados e registros adicionais são preservados.
+- **DTO alinhado ao formulário — validação consistente na entrada — trade-off:** campos opcionais e inválidos precisam seguir o schema da API.
+- **Erro Prisma `P2025` convertido em 404 — resposta previsível ao cliente — trade-off:** erros diferentes de P2025 continuam propagados.
+- **Health sem banco — verifica apenas o processo da API — trade-off:** não sinaliza indisponibilidade interna do PostgreSQL.
 
----
+## Licença
 
-## 🛠️ Scripts Disponíveis
-
-- `npm run start:dev`: Inicia a aplicação em modo de desenvolvimento.
-- `npm run build`: Compila o projeto para produção (gera a pasta `dist`).
-- `npm run start:prod`: Inicia a aplicação em modo de produção (a partir da pasta `dist`).
-- `npx prisma migrate dev`: Cria e aplica migrações no ambiente de desenvolvimento.
-- `npm run prisma:seed`: Executa o script para popular o banco com dados iniciais.
-
----
-
-## 🌐 Endpoints da API
-
-### Recurso: Livros (`/books`)
-
-| Método   | Rota   | Descrição                    | Corpo (Body)    |
-| :------- | :----- | :--------------------------- | :-------------- |
-| `POST`   | `/`    | Cria um novo livro.          | `CreateBookDto` |
-| `GET`    | `/`    | Lista todos os livros.       | N/A             |
-| `GET`    | `/:id` | Busca um livro pelo ID.      | N/A             |
-| `PATCH`  | `/:id` | Atualiza um livro existente. | `UpdateBookDto` |
-| `DELETE` | `/:id` | Remove um livro.             | N/A             |
-
-### Recurso: Gêneros (`/genres`)
-
-| Método | Rota | Descrição               | Corpo (Body)        |
-| :----- | :--- | :---------------------- | :------------------ |
-| `GET`  | `/`  | Lista todos os gêneros. | N/A                 |
-
----
-
-## ☁️ Considerações sobre Deploy
-
-Para fazer o deploy desta aplicação no Render, use uma URL PostgreSQL gerenciada.
-
-- **Variável de Ambiente de Produção:** Configure `DATABASE_URL` com a URL do banco gerenciado.
-- Use `DIRECT_DATABASE_URL` com a conexão direta do provedor quando `DATABASE_URL` usa um pooler.
-- **Comando de Build:** O processo de build deve incluir a execução das migrações.
-  - `npm install && npx prisma migrate deploy && npm run build && npm run prisma:seed`
-- **Comando de Start:** Execute a versão de produção.
-  - `npm run start:prod`
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença UNLICENSED.
-````
+O `package.json` declara `UNLICENSED`; não há licença pública definida.
