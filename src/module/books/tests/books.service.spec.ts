@@ -26,10 +26,7 @@ describe('BooksService', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        BooksService,
-        { provide: PrismaService, useValue: prisma },
-      ],
+      providers: [BooksService, { provide: PrismaService, useValue: prisma }],
     }).compile();
 
     service = module.get<BooksService>(BooksService);
@@ -41,6 +38,7 @@ describe('BooksService', () => {
 
     await expect(service.getBooks()).resolves.toBe(books);
     expect(prisma.book.findMany).toHaveBeenCalledWith({
+      orderBy: { id: 'asc' },
       include: { genres: true },
     });
   });
